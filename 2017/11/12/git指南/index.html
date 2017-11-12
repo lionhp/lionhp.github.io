@@ -100,10 +100,12 @@
 <meta property="og:site_name" content="子曰的小站">
 <meta property="og:description" content="作为一名程序猿，和代码托管工具打交道必不可少，特别是目前使用最多的git了。因此，有必要记录下git的简介和使用指南了。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-12T15:20:58.008Z">
+<meta property="og:image" content="http://ozb7pjc6f.bkt.clouddn.com/17-11-12/44334429.jpg">
+<meta property="og:updated_time" content="2017-11-12T15:36:03.323Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git指南">
 <meta name="twitter:description" content="作为一名程序猿，和代码托管工具打交道必不可少，特别是目前使用最多的git了。因此，有必要记录下git的简介和使用指南了。">
+<meta name="twitter:image" content="http://ozb7pjc6f.bkt.clouddn.com/17-11-12/44334429.jpg">
 
 
 
@@ -403,167 +405,56 @@
       
         <p>作为一名程序猿，和代码托管工具打交道必不可少，特别是目前使用最多的git了。因此，有必要记录下git的简介和使用指南了。</p>
 <a id="more"></a>
-<p>Git代码管理是分布式管理方式系统.优点在于其极高的安全性和非常强大的分支管理.<br>![整体流程图] (<a href="http://ozb7pjc6f.bkt.clouddn.com/17-11-12/44334429.jpg" target="_blank" rel="external">http://ozb7pjc6f.bkt.clouddn.com/17-11-12/44334429.jpg</a>)</p>
-<p>#1. 工作区(working directory):<br>     就是本地的代码区,电脑能看到的目录,就是工作区.</p>
-<p>#2. 暂存区(Index):<br>    工作区下有一个隐藏的’.git’文件,其主要作用是存储Git自动创建的第一个master分支,还有指向master分支的HEAD指针.还有一个最重要的stage的暂存区.需要提交的文件修改通通放到暂存区,然后一次性提交到暂存区的所有修改.</p>
-<p>#3. 本地仓:<br>    本地的个人仓库.管理着个人的代码的版本信息.</p>
-<p>#4. 远程仓:<br>    线上的仓库.管理着推送到服务器的代码版本.</p>
-<p>#5. 过程1:<br>    由工作区&lt;-&gt;暂存区</p>
-<pre><code>工作区-&gt;暂存区:
+<p>Git代码管理是分布式管理方式系统.优点在于其极高的安全性和非常强大的分支管理.</p>
+<div align="center"><br><img src="http://ozb7pjc6f.bkt.clouddn.com/17-11-12/44334429.jpg" alt="整体流程图"><br></div>
 
-用git add . 添加所有的修改或者git add &lt;文件名&gt;添加单个指定的文件修改到暂存区中.
 
-暂存区-&gt;工作区:
+<h1 id="1-工作区-working-directory"><a href="#1-工作区-working-directory" class="headerlink" title="1. 工作区(working directory):"></a>1. 工作区(working directory):</h1><p>就是本地的代码区,电脑能看到的目录,就是工作区.</p>
+<h1 id="2-暂存区-Index"><a href="#2-暂存区-Index" class="headerlink" title="2. 暂存区(Index):"></a>2. 暂存区(Index):</h1><p>工作区下有一个隐藏的’.git’文件,其主要作用是存储Git自动创建的第一个master分支,还有指向master分支的HEAD指针.还有一个最重要的stage的暂存区.需要提交的文件修改通通放到暂存区,然后一次性提交到暂存区的所有修改.</p>
+<h1 id="3-本地仓"><a href="#3-本地仓" class="headerlink" title="3. 本地仓:"></a>3. 本地仓:</h1><p>本地的个人仓库.管理着个人的代码的版本信息.</p>
+<h1 id="4-远程仓"><a href="#4-远程仓" class="headerlink" title="4. 远程仓:"></a>4. 远程仓:</h1><p>线上的仓库.管理着推送到服务器的代码版本.</p>
+<h1 id="5-过程1"><a href="#5-过程1" class="headerlink" title="5. 过程1:"></a>5. 过程1:</h1><p>由工作区&lt;-&gt;暂存区</p>
+<p>工作区-&gt;暂存区:</p>
+<p>用git add . 添加所有的修改或者git add &lt;文件名&gt;添加单个指定的文件修改到暂存区中.</p>
+<p>暂存区-&gt;工作区:</p>
+<p>(1)git rm –cached “文件路径” 不删除物理文件,紧将物理文件删除.</p>
+<p>(2)git rm –f “文件路径” 不仅将该文件从缓存中 删除,还将物理文件删除(不会放到垃圾桶).</p>
+<p>(3)git reset &lt;版本号&gt; 利用版本库清空暂存区.原理:将当前分支重设(reset)到指定的<commit>或者HEAD(默认,如果不指定commit,默认是HEAD,即最新的一次提交)</commit></p>
+<p>–hard<br>git reset –hard <commit号>重设(reset)index和working directory，自从<commit>以来在working directory中的任何改变都被丢弃，并把HEAD指向<commit><br>–soft<br>git reset –hard <commit号>index和working directory中的内容不作任何改变，仅仅把HEAD指向<commit>。这个模式的效果是，执行完毕后，自从<commit>以来的所有改变都会显示在git status的”Changes to be committed”中</commit></commit></commit号></commit></commit></commit号></p>
+<h1 id="6-过程2"><a href="#6-过程2" class="headerlink" title="6. 过程2:"></a>6. 过程2:</h1><p>由暂存区&lt;-&gt;本地仓库</p>
+<p>暂存区-&gt;本地仓库</p>
+<p>用git commit -m ‘本次commit的描述’<br>本地仓库-&gt;暂存区</p>
+<p>git reset &lt;版本号&gt; 利用版本库清空暂存区.原理:将当前分支重设(reset)到指定的<commit>或者HEAD(默认,如果不指定commit,默认是HEAD,即最新的一次提交)<br>–hard<br>git reset –hard <commit号>重设(reset)index和working directory，自从<commit>以来在working directory中的任何改变都被丢弃，并把HEAD指向<commit><br>–soft<br>git reset –hard <commit号>index和working directory中的内容不作任何改变，仅仅把HEAD指向<commit>。这个模式的效果是，执行完毕后，自从<commit>以来的所有改变都会显示在git status的”Changes to be committed”中.退回到该次commit提交,但是该版本之后所有的修改都没有了,如果想要恢复,就要试图从还未关闭的终端中找到你想要的退回的版本号,或者用git reflog查找你想要的commit版本号.继续用git reset –hard <commit号>回退</commit号></commit></commit></commit号></commit></commit></commit号></commit></p>
+<h1 id="7-过程3"><a href="#7-过程3" class="headerlink" title="7. 过程3:"></a>7. 过程3:</h1><p>由本地仓-&gt;远程仓库</p>
+<p>用git push</p>
+<p>在本地创建一个Git管理的项目</p>
+<p>1.从线上拉项目到本地<br>用 git clone “项目的地址路径”克隆一个git管理的项目到本地<br>2.本地项目上传线上<br>git init<br>git remote add origin “地址url”</p>
+<h1 id="8-Git上的常用查看操作"><a href="#8-Git上的常用查看操作" class="headerlink" title="8. Git上的常用查看操作"></a>8. Git上的常用查看操作</h1><p>1.查看文本内容<br>cat &lt;文件名&gt;<br>2.查看git的状态<br>git status会告诉你在当前的分支上git的情况(有没有修改,修改的文件是什么等)<br>➜ learngit git:(master) git status On branch master Your branch is up-to-date with ‘origin/master’. nothing to commit, working directory clean<br>3.查看更详细的文件修改<br>git diff 查看所有文件的不同<br>git diff &lt;文件名&gt; 查看指定文件的不同<br>diff 是difference的缩写.只能查看还未add(还没加入到暂存区)的修改<br>4.查看所有的commit信息<br>git log<br>git log –pretty=oneline 更简洁的查看log信息(只有commit号和描述信息)<br>5.查看所有的git操作过的命令,可以找到删除了的commit号<br>git reflog<br>6.查看分支合并图<br>git log –graph</p>
+<h1 id="9-冲突处理"><a href="#9-冲突处理" class="headerlink" title="9. 冲突处理"></a>9. 冲突处理</h1><p>1 &lt;&lt;&lt;&lt;&lt;&lt;&lt;HEAD</p>
+<p>1 + 1 = 2 这个区间内的内容是当前开发者修改的</p>
+<p>2 =======</p>
+<p>1 + 2 = 3 这个区间内的内容是其他开发者修改的</p>
+<p>3 &gt;&gt;&gt;&gt;&gt;&gt;&gt;</p>
+<p>需要人工判断具体是删除或者保留哪一个修改内容.并且把1,2,3行提示删除掉.</p>
+<h1 id="10-Git分支操作"><a href="#10-Git分支操作" class="headerlink" title="10. Git分支操作"></a>10. Git分支操作</h1><p>分支基本操作</p>
+<p>1.分支的创建和切换</p>
+<p>git branch “分支名” 创建一个分支 git checkout “分支名” 切换到该分支<br>创建并切换到该分支 git checkout -b “分支名”<br>2.列出所有的分支</p>
+<p>git branch 用*标记当前的分支<br>git branch -a 列出远程分支<br>3.合并分支</p>
+<p>git merge “分支名”合并指定分支到当前分支<br>git rebase “分支名”合并指定分支到当前分支<br>两者的区别在于会不会保留分支操作的记录,前者记录,后者不记录.建议用merge<br>4.删除分支</p>
+<p>删除本地分支: git branch -d “分支名”<br>强制删除本地分支: git branch -D “分支名”<br>如果提示the branch XXX is not fully merged(XXX分支有没有合并到当前分支的内容)<br>删除远程分支: git push origin :&lt;分支名&gt; (危险命令哦)<br>5.本地新建了一个分支要推送到线上,需要设置关联或者追踪.</p>
+<p>第一次push: git push origin 本地分支名:远程分支名<br>6远程端生成了一个新的分支,拉取到本地.</p>
+<p>先关联远程端分支到本地: git branch –set-upstream-to=origin/&lt;线上分支名&gt; &lt;本地分支名&gt;<br>然后git pull<br>bug分支</p>
+<p>用issue作为分支的开头标记,当有一个bug出现需要改的时候,先拉取一个issue分支,修改并合并到开发分支上,然后删除issue分支.</p>
+<h1 id="11-feature分支"><a href="#11-feature分支" class="headerlink" title="11. feature分支"></a>11. feature分支</h1><p>开发新的功能的时候,最好拉去一个新的分支,以feature开头.<br>丢掉一个没有合并过的分支,即删除分支.(当新功能正在或者已经开发完,领导突然说不要了…心累)<br>git branch -D &lt;分支名&gt; 强制删除该分支内容<br>暂存的使用</p>
+<p>1.git stash 暂存<br>2.git stash list 查看所有的暂存<br>3.git stash apply 从暂存开始执行,但是stash内容不会删除.<br>4.git stash drop 删除暂存<br>5.git stash pop 恢复暂存的同时删除暂存<br>6.git stash apply stash@{0}恢复指定的暂存</p>
+<h1 id="12-远程仓的操作"><a href="#12-远程仓的操作" class="headerlink" title="12. 远程仓的操作"></a>12. 远程仓的操作</h1><p>1.查看远程仓的信息<br>git remote<br>git remote -v 显示更详细的信息<br>2.将分支推送到远程仓<br>git push origin 本地分支名:远程分支名</p>
+<h1 id="13-标签的使用"><a href="#13-标签的使用" class="headerlink" title="13. 标签的使用"></a>13. 标签的使用</h1><p>1.git tag <name>新建一个标签<br>2.git tag -a <name> -m “指定的标签信息”<br>3.git show <tag名字> 查看详细的tag信息<br>4.git tag 查看所有的tag名字<br>5.git tag -d &lt;标签名字&gt;删除一个标签<br>6.git push origin &lt;标签名&gt;推送标签到远程<br>7.git push origin –tags一次性推送所有未推送的标签<br>8.删除远程仓上的tag</tag名字></name></name></p>
+<p>先删除本地的标签: git tag -d <tag名字><br>然后删除远程端的标签: git push origin :refs/tags/<tag名字></tag名字></tag名字></p>
+<h1 id="14-gitignore的使用"><a href="#14-gitignore的使用" class="headerlink" title="14. .gitignore的使用"></a>14. .gitignore的使用</h1><p>git check-ignore 检查ignore内容</p>
+<p>git add -f &lt;文件名&gt;即使在gitignore中文件,也可以提交.    </p>
+<p>git ignore 更新了要忽略的文件后要清楚本地缓存，具体操作为：<br>git rm -r –cached .<br>git add .<br>git commit -a ‘update’<br>git push</p>
+<h1 id="15-Git-配置全局信息"><a href="#15-Git-配置全局信息" class="headerlink" title="15. Git 配置全局信息"></a>15. Git 配置全局信息</h1><p>1.配置作者名称<br>git config –global user.name “Your Name”<br>2.配置个人邮箱<br>git config –global user.email “email@example.com”<br>3.配置git的颜色(文件名会标记上颜色)<br>git config –global color.ui true</p>
 
-(1)git rm --cached &quot;文件路径&quot; 不删除物理文件,紧将物理文件删除.
-
-(2)git rm --f &quot;文件路径&quot; 不仅将该文件从缓存中 删除,还将物理文件删除(不会放到垃圾桶).
-
-(3)git reset &lt;版本号&gt; 利用版本库清空暂存区.原理:将当前分支重设(reset)到指定的&lt;commit&gt;或者HEAD(默认,如果不指定commit,默认是HEAD,即最新的一次提交)
-
---hard
-git reset --hard &lt;commit号&gt;重设(reset)index和working directory，自从&lt;commit&gt;以来在working directory中的任何改变都被丢弃，并把HEAD指向&lt;commit&gt;
---soft
-git reset --hard &lt;commit号&gt;index和working directory中的内容不作任何改变，仅仅把HEAD指向&lt;commit&gt;。这个模式的效果是，执行完毕后，自从&lt;commit&gt;以来的所有改变都会显示在git status的&quot;Changes to be committed&quot;中
-</code></pre><p>#6. 过程2:<br>    由暂存区&lt;-&gt;本地仓库</p>
-<pre><code>暂存区-&gt;本地仓库
-
-用git commit -m &apos;本次commit的描述&apos;
-本地仓库-&gt;暂存区
-
-git reset &lt;版本号&gt; 利用版本库清空暂存区.原理:将当前分支重设(reset)到指定的&lt;commit&gt;或者HEAD(默认,如果不指定commit,默认是HEAD,即最新的一次提交)
---hard
-git reset --hard &lt;commit号&gt;重设(reset)index和working directory，自从&lt;commit&gt;以来在working directory中的任何改变都被丢弃，并把HEAD指向&lt;commit&gt;
---soft
-git reset --hard &lt;commit号&gt;index和working directory中的内容不作任何改变，仅仅把HEAD指向&lt;commit&gt;。这个模式的效果是，执行完毕后，自从&lt;commit&gt;以来的所有改变都会显示在git status的&quot;Changes to be committed&quot;中.退回到该次commit提交,但是该版本之后所有的修改都没有了,如果想要恢复,就要试图从还未关闭的终端中找到你想要的退回的版本号,或者用git reflog查找你想要的commit版本号.继续用git reset --hard &lt;commit号&gt;回退
-</code></pre><p>#7. 过程3:<br>    由本地仓-&gt;远程仓库</p>
-<pre><code>用git push
-
-在本地创建一个Git管理的项目
-
-1.从线上拉项目到本地
-用 git clone &quot;项目的地址路径&quot;克隆一个git管理的项目到本地
-2.本地项目上传线上
-git init
-git remote add origin &quot;地址url&quot;
-</code></pre><p>#8. Git上的常用查看操作</p>
-<pre><code>1.查看文本内容
-cat &lt;文件名&gt;
-2.查看git的状态
-git status会告诉你在当前的分支上git的情况(有没有修改,修改的文件是什么等)
-➜ learngit git:(master) git status On branch master Your branch is up-to-date with &apos;origin/master&apos;. nothing to commit, working directory clean
-3.查看更详细的文件修改
-git diff 查看所有文件的不同
-git diff &lt;文件名&gt; 查看指定文件的不同
-diff 是difference的缩写.只能查看还未add(还没加入到暂存区)的修改
-4.查看所有的commit信息
-git log
-git log --pretty=oneline 更简洁的查看log信息(只有commit号和描述信息)
-5.查看所有的git操作过的命令,可以找到删除了的commit号
-git reflog
-6.查看分支合并图
-git log --graph
-</code></pre><p>#9. 冲突处理</p>
-<pre><code>1 &lt;&lt;&lt;&lt;&lt;&lt;&lt;HEAD
-
-1 + 1 = 2 这个区间内的内容是当前开发者修改的
-
-2 =======
-
-1 + 2 = 3 这个区间内的内容是其他开发者修改的
-
-3 &gt;&gt;&gt;&gt;&gt;&gt;&gt;
-
-需要人工判断具体是删除或者保留哪一个修改内容.并且把1,2,3行提示删除掉.
-</code></pre><p>#10. Git分支操作</p>
-<pre><code>分支基本操作
-
-1.分支的创建和切换
-
-git branch &quot;分支名&quot; 创建一个分支 git checkout &quot;分支名&quot; 切换到该分支
-创建并切换到该分支 git checkout -b &quot;分支名&quot;
-2.列出所有的分支
-
-git branch 用*标记当前的分支
-git branch -a 列出远程分支
-3.合并分支
-
-git merge &quot;分支名&quot;合并指定分支到当前分支
-git rebase &quot;分支名&quot;合并指定分支到当前分支
-两者的区别在于会不会保留分支操作的记录,前者记录,后者不记录.建议用merge
-4.删除分支
-
-删除本地分支: git branch -d &quot;分支名&quot;
-强制删除本地分支: git branch -D &quot;分支名&quot;
-如果提示the branch XXX is not fully merged(XXX分支有没有合并到当前分支的内容)
-删除远程分支: git push origin :&lt;分支名&gt; (危险命令哦)
-5.本地新建了一个分支要推送到线上,需要设置关联或者追踪.
-
-第一次push: git push origin 本地分支名:远程分支名
-6远程端生成了一个新的分支,拉取到本地.
-
-先关联远程端分支到本地: git branch --set-upstream-to=origin/&lt;线上分支名&gt; &lt;本地分支名&gt;
-然后git pull
-bug分支
-
-用issue作为分支的开头标记,当有一个bug出现需要改的时候,先拉取一个issue分支,修改并合并到开发分支上,然后删除issue分支.
-</code></pre><p>#11. feature分支</p>
-<pre><code>开发新的功能的时候,最好拉去一个新的分支,以feature开头.
-丢掉一个没有合并过的分支,即删除分支.(当新功能正在或者已经开发完,领导突然说不要了...心累)
-git branch -D &lt;分支名&gt; 强制删除该分支内容
-暂存的使用
-
-1.git stash 暂存
-2.git stash list 查看所有的暂存
-3.git stash apply 从暂存开始执行,但是stash内容不会删除.
-4.git stash drop 删除暂存
-5.git stash pop 恢复暂存的同时删除暂存
-6.git stash apply stash@{0}恢复指定的暂存
-</code></pre><p>#12. 远程仓的操作</p>
-<pre><code>1.查看远程仓的信息
-git remote
-git remote -v 显示更详细的信息
-2.将分支推送到远程仓
-git push origin 本地分支名:远程分支名
-</code></pre><p>#13. 标签的使用</p>
-<pre><code>1.git tag &lt;name&gt;新建一个标签
-2.git tag -a &lt;name&gt; -m &quot;指定的标签信息&quot;
-3.git show &lt;tag名字&gt; 查看详细的tag信息
-4.git tag 查看所有的tag名字
-5.git tag -d &lt;标签名字&gt;删除一个标签
-6.git push origin &lt;标签名&gt;推送标签到远程
-7.git push origin --tags一次性推送所有未推送的标签
-8.删除远程仓上的tag
-
-先删除本地的标签: git tag -d &lt;tag名字&gt;
-然后删除远程端的标签: git push origin :refs/tags/&lt;tag名字&gt;
-</code></pre><p>#14. .gitignore的使用</p>
-<pre><code>iOS 用到的.gitignore https://github.com/github/gitignore/blob/master/Objective-C.gitignore
-在工作区创建一个名字为.gitignore文件.把要忽略的文件名字填进去,并提交到Git.Git会自动忽略这些文件的修改.把链接中的内容信息copy到.gitignore文件中.
-
-记住一定要把.gitignore拉取到具体的分支上才有用.
-
-git check-ignore 检查ignore内容
-
-git add -f &lt;文件名&gt;即使在gitignore中文件,也可以提交.
-
-UserInterfaceState.xcuserstate 的屏蔽
-在. gitignore文件中加入UserInterfaceState.xcuserstate.在终端中输入git rm --cached &lt;你的工程名字&gt;.xcodeproj/project.xcworkspace/xcuserdata/&lt;该电脑用户名&gt;字.xcuserdatad/UserInterfaceState.xcuserstate
-然后add,commit,push等操作.
-
-git ignore 更新了要忽略的文件后要清楚本地缓存，具体操作为：
-git rm -r --cached .
-git add .
-git commit -a &apos;update&apos;
-git push
-</code></pre><p>#15. Git 配置全局信息</p>
-<pre><code>1.配置作者名称
-git config --global user.name &quot;Your Name&quot;
-2.配置个人邮箱
-git config --global user.email &quot;email@example.com&quot;
-3.配置git的颜色(文件名会标记上颜色)
-git config --global color.ui true
-</code></pre>
       
     </div>
 
@@ -678,8 +569,17 @@ git config --global color.ui true
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/header.jpg"
@@ -782,6 +682,22 @@ git config --global color.ui true
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-工作区-working-directory"><span class="nav-number">1.</span> <span class="nav-text">1. 工作区(working directory):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-暂存区-Index"><span class="nav-number">2.</span> <span class="nav-text">2. 暂存区(Index):</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-本地仓"><span class="nav-number">3.</span> <span class="nav-text">3. 本地仓:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-远程仓"><span class="nav-number">4.</span> <span class="nav-text">4. 远程仓:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-过程1"><span class="nav-number">5.</span> <span class="nav-text">5. 过程1:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-过程2"><span class="nav-number">6.</span> <span class="nav-text">6. 过程2:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-过程3"><span class="nav-number">7.</span> <span class="nav-text">7. 过程3:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-Git上的常用查看操作"><span class="nav-number">8.</span> <span class="nav-text">8. Git上的常用查看操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-冲突处理"><span class="nav-number">9.</span> <span class="nav-text">9. 冲突处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-Git分支操作"><span class="nav-number">10.</span> <span class="nav-text">10. Git分支操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-feature分支"><span class="nav-number">11.</span> <span class="nav-text">11. feature分支</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-远程仓的操作"><span class="nav-number">12.</span> <span class="nav-text">12. 远程仓的操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-标签的使用"><span class="nav-number">13.</span> <span class="nav-text">13. 标签的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-gitignore的使用"><span class="nav-number">14.</span> <span class="nav-text">14. .gitignore的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-Git-配置全局信息"><span class="nav-number">15.</span> <span class="nav-text">15. Git 配置全局信息</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
